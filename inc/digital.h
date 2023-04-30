@@ -31,6 +31,7 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions ================================================================ */
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /* === Cabecera C++ ============================================================================ */
 
@@ -42,6 +43,9 @@ extern "C" {
 
 /* === Public data type declarations =========================================================== */
 
+//! Puntero al descriptor de cada entrada digital.
+typedef struct digital_input_s * digital_input_t;
+
 //! Puntero al descriptor de cada salida digital.
 typedef struct digital_output_s * digital_output_t;
 
@@ -49,10 +53,61 @@ typedef struct digital_output_s * digital_output_t;
 
 /* === Public function declarations ============================================================ */
 
+/*********Entradas**********/
+
+/**
+ * @brief Crea una entrada digital.
+ * 
+ * Esta función crea una entrada digital según el puerto GPIO y bit indicados.
+ * 
+ * @param gpio  Puerto GPIO de la entrada.
+ * @param bit   Terminal del puerto GPIO correspondiente a la entrada.
+ * @return digital_input_t Puntero al descriptor de la entrada creada.
+ */
+digital_input_t DigitalInputCreate(uint8_t gpio, uint8_t bit);
+
+/**
+ * @brief Consulta el estado de la entrada digital.
+ * 
+ * @param input  puntero al descriptor de la entrada.
+ * @return true  La entrada está activa.
+ * @return false La entrada está inactiva.
+ */
+bool DigitalInputGetState(digital_input_t input);
+
+/**
+ * @brief Consulta cambios en el estado de una entrada digital.
+ * 
+ * @param input  puntero al descriptor de la entrada.
+ * @return true  La entrada cambió desde la última llamada.
+ * @return false La entrada no cambió desde la última llamada.
+ */
+bool DigitalInputHasChanged(digital_input_t input);
+
+/**
+ * @brief Consulta si la entrada digital fue activada.
+ * 
+ * @param input  puntero al descriptor de la entrada.
+ * @return true  La entrada se activó.
+ * @return false La entrada no se activó.
+ */
+bool DigitalInputHasActivated(digital_input_t input);
+
+/**
+ * @brief Consulta si la entrada digital fue desactivada.
+ * 
+ * @param input  puntero al descriptor de la entrada.
+ * @return true  La entrada se desactivó.
+ * @return false La entrada no se desactivó.
+ */
+bool DigitalInputHasDeactivated(digital_input_t input);
+
+/*********Salidas**********/
+
 /**
  * @brief Crea una salida digital.
  * 
- * Esta funcion crea una salida digital según el puerto GPIO y bit indicados.
+ * Esta función crea una salida digital según el puerto GPIO y bit indicados.
  * 
  * @param gpio  Puerto GPIO de la salida.
  * @param bit   Terminal del puerto GPIO correspondiente a la salida.

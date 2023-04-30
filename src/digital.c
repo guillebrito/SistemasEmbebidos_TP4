@@ -40,13 +40,13 @@ SPDX-License-Identifier: MIT
 
 /* === Private data type declarations ========================================================== */
 
-/* === Private variable declarations =========================================================== */
-
-/* === Private function declarations =========================================================== */
-
-digital_output_t DigitalOutputAllocate(void);
-
-/* === Public variable definitions ============================================================= */
+//! Estructura para almacenar el descriptor de cada entrada digital.
+struct digital_input_s
+{
+    uint8_t gpio;   //!< Puerto GPIO de la entrada digital.
+    uint8_t bit;    //!< Terminal del puerto GPIO de la entrada digital.
+    bool allocated; //!< Bandera para indicar que el descriptor está en uso.
+};
 
 //! Estructura para almacenar el descriptor de cada salida digital.
 struct digital_output_s
@@ -55,6 +55,14 @@ struct digital_output_s
     uint8_t bit;    //!< Terminal del puerto GPIO de la salida digital.
     bool allocated; //!< Bandera para indicar que el descriptor está en uso.
 };
+
+/* === Private variable declarations =========================================================== */
+
+/* === Private function declarations =========================================================== */
+
+digital_output_t DigitalOutputAllocate(void);
+
+/* === Public variable definitions ============================================================= */
 
 /* === Private variable definitions ============================================================ */
 
@@ -80,6 +88,31 @@ digital_output_t DigitalOutputAllocate(void)
 }
 
 /* === Public function implementation ========================================================== */
+
+/*********Entradas**********/
+
+digital_input_t DigitalInputCreate(uint8_t gpio, uint8_t bit)
+{
+    return NULL;
+}
+bool DigitalInputGetState(digital_input_t input)
+{
+    return 0;
+}
+bool DigitalInputHasChanged(digital_input_t input)
+{
+    return 0;
+}
+bool DigitalInputHasActivated(digital_input_t input)
+{
+    return 0;
+}
+bool DigitalInputHasDeactivated(digital_input_t input)
+{
+    return 0;
+}
+
+/*********Salidas**********/
 
 digital_output_t DigitalOutputCreate(uint8_t gpio, uint8_t bit)
 {
