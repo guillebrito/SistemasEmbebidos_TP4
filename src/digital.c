@@ -40,8 +40,11 @@ SPDX-License-Identifier: MIT
 
 /* === Public variable definitions ============================================================= */
 
+//! Estructura para almacenar el descriptor de cada salida digital.
 struct digital_output_s
 {
+    uint8_t port; //!< Puerto GPIO de la salida digital.
+    uint8_t pin;  //!< Terminal del puerto GPIO de la salida digital.
 };
 
 /* === Private variable definitions ============================================================ */

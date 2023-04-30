@@ -13,3 +13,4 @@ ColumnLimit: 100
 AccessModifierOffset: -4
 FixNamespaceComments: false
 PointerAlignment: Middle
+AlignConsecutiveMacros: AcrossEmptyLines
