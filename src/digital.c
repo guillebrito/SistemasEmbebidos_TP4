@@ -38,14 +38,18 @@ SPDX-License-Identifier: MIT
 #define OUTPUT_INSTANCES 6
 #endif
 
+#ifndef INPUT_INSTANCES
+#define INPUT_INSTANCES 4
+#endif
 /* === Private data type declarations ========================================================== */
 
 //! Estructura para almacenar el descriptor de cada entrada digital.
 struct digital_input_s
 {
-    uint8_t gpio;   //!< Puerto GPIO de la entrada digital.
-    uint8_t bit;    //!< Terminal del puerto GPIO de la entrada digital.
-    bool allocated; //!< Bandera para indicar que el descriptor está en uso.
+    uint8_t gpio;    //!< Puerto GPIO de la entrada digital.
+    uint8_t bit;     //!< Terminal del puerto GPIO de la entrada digital.
+    bool last_state; //!< Bandera con el último estado reportado de la entrada.
+    bool allocated;  //!< Bandera para indicar que el descriptor está en uso.
 };
 
 //! Estructura para almacenar el descriptor de cada salida digital.
@@ -67,6 +71,25 @@ digital_output_t DigitalOutputAllocate(void);
 /* === Private variable definitions ============================================================ */
 
 /* === Private function implementation ========================================================= */
+
+digital_output_t DigitalInputAllocate(void)
+{
+    digital_input_t input = NULL;
+
+    static struct digital_input_s instances[INPUT_INSTANCES] = {0};
+
+    for (int i = 0; i < INPUT_INSTANCES; i++)
+    {
+        if (!instances[i].allocated) // El descriptor no esta en uso
+        {
+            instances[i].allocated = true;
+            input = &instances[i];
+            break;
+        }
+    }
+
+    return input;
+}
 
 digital_output_t DigitalOutputAllocate(void)
 {
@@ -93,30 +116,48 @@ digital_output_t DigitalOutputAllocate(void)
 
 digital_input_t DigitalInputCreate(uint8_t gpio, uint8_t bit)
 {
-    static struct digital_input_s input;
+    digital_input_t input = DigitalInputAllocate();
 
-    input.gpio = gpio;
-    input.bit = bit;
+    if (input) // Si input=NULL no crea entrada y retorna NULL
+    {
+        input->gpio = gpio;
+        input->bit = bit;
+        Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, input->gpio, input->bit, false);
+    }
 
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, input.gpio, input.bit, false);
-
-    return &input;
+    return input;
 }
+
 bool DigitalInputGetState(digital_input_t input)
 {
     return Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, input->gpio, input->bit);
 }
+
 bool DigitalInputHasChanged(digital_input_t input)
 {
-    return 0;
+    bool state = DigitalInputGetState(input);
+    bool result = state != input->last_state;
+    input->last_state = state;
+
+    return result;
 }
+
 bool DigitalInputHasActivated(digital_input_t input)
 {
-    return 0;
+    bool state = DigitalInputGetState(input);
+    bool result = state && !input->last_state;
+    input->last_state = state;
+
+    return result;
 }
+
 bool DigitalInputHasDeactivated(digital_input_t input)
 {
-    return 0;
+    bool state = DigitalInputGetState(input);
+    bool result = !state && input->last_state;
+    input->last_state = state;
+
+    return result;
 }
 
 /*********Salidas**********/
@@ -125,7 +166,7 @@ digital_output_t DigitalOutputCreate(uint8_t gpio, uint8_t bit)
 {
     digital_output_t output = DigitalOutputAllocate();
 
-    if (output) // Si output=NULL no crea entrada y retorna NULL
+    if (output) // Si output=NULL no crea salida y retorna NULL
     {
         output->gpio = gpio;
         output->bit = bit;

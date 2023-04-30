@@ -130,6 +130,9 @@ int main(void)
     digital_output_t led_3;
 
     digital_input_t tec_1;
+    digital_input_t tec_2;
+    digital_input_t tec_3;
+    digital_input_t tec_4;
 
     int divisor = 0;
     bool current_state, last_state = false;
@@ -158,13 +161,13 @@ int main(void)
     tec_1 = DigitalInputCreate(TEC_1_GPIO, TEC_1_BIT);
 
     Chip_SCU_PinMuxSet(TEC_2_PORT, TEC_2_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_2_FUNC);
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_2_GPIO, TEC_2_BIT, false);
+    tec_2 = DigitalInputCreate(TEC_2_GPIO, TEC_2_BIT);
 
     Chip_SCU_PinMuxSet(TEC_3_PORT, TEC_3_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_3_FUNC);
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_3_GPIO, TEC_3_BIT, false);
+    tec_3 = DigitalInputCreate(TEC_3_GPIO, TEC_3_BIT);
 
     Chip_SCU_PinMuxSet(TEC_4_PORT, TEC_4_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | TEC_4_FUNC);
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, TEC_4_GPIO, TEC_4_BIT, false);
+    tec_4 = DigitalInputCreate(TEC_4_GPIO, TEC_4_BIT);
 
     while (true)
     {
@@ -177,18 +180,16 @@ int main(void)
             DigitalOutputDeactivate(led_b);
         }
 
-        current_state = (Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, TEC_2_GPIO, TEC_2_BIT) == 0);
-        if ((current_state) && (!last_state))
+        if (DigitalInputHasActivated(tec_2))
         {
             DigitalOutputToggle(led_1);
         }
-        last_state = current_state;
 
-        if (Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, TEC_3_GPIO, TEC_3_BIT) == 0)
+        if (DigitalInputHasActivated(tec_3))
         {
             DigitalOutputActivate(led_2);
         }
-        if (Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, TEC_4_GPIO, TEC_4_BIT) == 0)
+        if (DigitalInputHasActivated(tec_4))
         {
             DigitalOutputDeactivate(led_2);
         }
