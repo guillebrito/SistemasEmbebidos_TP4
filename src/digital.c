@@ -27,6 +27,7 @@ SPDX-License-Identifier: MIT
 
 /* === Headers files inclusions =============================================================== */
 
+#include <stdint.h>
 #include "digital.h"
 
 /* === Macros definitions ====================================================================== */
@@ -39,11 +40,35 @@ SPDX-License-Identifier: MIT
 
 /* === Public variable definitions ============================================================= */
 
+struct digital_output_s
+{
+};
+
 /* === Private variable definitions ============================================================ */
 
 /* === Private function implementation ========================================================= */
 
 /* === Public function implementation ========================================================== */
+
+digital_output_t DigitalOutputCreate(uint8_t port, uint8_t pin)
+{
+    return 0;
+}
+
+void DigitalOutputActivate(digital_output_t output)
+{
+    return 0;
+}
+
+void DigitalOutputDeativate(digital_output_t output)
+{
+    return 0;
+}
+
+void DigitalOutputToggle(digital_output_t output)
+{
+    return 0;
+}
 
 /* === End of documentation ==================================================================== */
 
