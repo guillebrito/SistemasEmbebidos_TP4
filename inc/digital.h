@@ -8,7 +8,7 @@ sublicense, and/or sell copies of the Software, and to permit persons to whom th
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial
-portions of the Software.
+gpioions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
 NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -52,13 +52,13 @@ typedef struct digital_output_s * digital_output_t;
 /**
  * @brief Crea una salida digital.
  * 
- * Esta funcion crea una salida digital según el puerto GPIO y pin indicados.
+ * Esta funcion crea una salida digital según el puerto GPIO y bit indicados.
  * 
- * @param port  Puerto GPIO de la salida.
- * @param pin   Terminal del puerto GPIO correspondiente a la salida.
+ * @param gpio  Puerto GPIO de la salida.
+ * @param bit   Terminal del puerto GPIO correspondiente a la salida.
  * @return digital_output_t Puntero al descriptor de la salida creada.
  */
-digital_output_t DigitalOutputCreate(uint8_t port, uint8_t pin);
+digital_output_t DigitalOutputCreate(uint8_t gpio, uint8_t bit);
 
 /**
  * @brief Activa una salida.
@@ -72,7 +72,7 @@ void DigitalOutputActivate(digital_output_t output);
  * 
  * @param output Puntero al descriptor de la salida.
  */
-void DigitalOutputDeativate(digital_output_t output);
+void DigitalOutputDeactivate(digital_output_t output);
 
 /**
  * @brief Invierte el estado de una salida.

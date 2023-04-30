@@ -8,7 +8,7 @@ sublicense, and/or sell copies of the Software, and to permit persons to whom th
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial
-portions of the Software.
+gpioions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
 NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -28,10 +28,15 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions =============================================================== */
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "chip.h"
 #include "digital.h"
 
 /* === Macros definitions ====================================================================== */
+
+#ifndef OUTPUT_INSTANCES
+#define OUTPUT_INSTANCES 6
+#endif
 
 /* === Private data type declarations ========================================================== */
 
@@ -39,44 +44,74 @@ SPDX-License-Identifier: MIT
 
 /* === Private function declarations =========================================================== */
 
+digital_output_t DigitalOutputAllocate(void);
+
 /* === Public variable definitions ============================================================= */
 
 //! Estructura para almacenar el descriptor de cada salida digital.
 struct digital_output_s
 {
-    uint8_t port; //!< Puerto GPIO de la salida digital.
-    uint8_t pin;  //!< Terminal del puerto GPIO de la salida digital.
+    uint8_t gpio;   //!< Puerto GPIO de la salida digital.
+    uint8_t bit;    //!< Terminal del puerto GPIO de la salida digital.
+    bool allocated; //!< Bandera para indicar que el descriptor está en uso.
 };
 
 /* === Private variable definitions ============================================================ */
 
 /* === Private function implementation ========================================================= */
 
+digital_output_t DigitalOutputAllocate(void)
+{
+    digital_output_t output = NULL;
+
+    static struct digital_output_s instances[OUTPUT_INSTANCES] = {0};
+
+    for (int i = 0; i < OUTPUT_INSTANCES; i++)
+    {
+        if (!instances[i].allocated) // El descriptor no esta en uso
+        {
+            instances[i].allocated = true;
+            output = &instances[i];
+            break;
+        }
+    }
+
+    return output;
+}
+
 /* === Public function implementation ========================================================== */
 
-digital_output_t DigitalOutputCreate(uint8_t port, uint8_t pin)
+digital_output_t DigitalOutputCreate(uint8_t gpio, uint8_t bit)
 {
-    static struct digital_output_s output;
+    digital_output_t output = DigitalOutputAllocate();
 
-    output.port = port;
-    output.pin = pin;
-    Chip_GPIO_SetPinState(LPC_GPIO_PORT, output.port, output.pin, false);
-    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, output.port, output.pin, true);
+    if (output) // Si output=NULL no crea entrada y retorna NULL
+    {
+        output->gpio = gpio;
+        output->bit = bit;
+        Chip_GPIO_SetPinState(LPC_GPIO_PORT, output->gpio, output->bit, false);
+        Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, output->gpio, output->bit, true);
+    }
 
-    return &output;
+    return output;
 }
 
 void DigitalOutputActivate(digital_output_t output)
 {
+    Chip_GPIO_SetPinState(LPC_GPIO_PORT, output->gpio, output->bit, true);
+    return;
 }
 
-void DigitalOutputDeativate(digital_output_t output)
+void DigitalOutputDeactivate(digital_output_t output)
 {
+    Chip_GPIO_SetPinState(LPC_GPIO_PORT, output->gpio, output->bit, false);
+    return;
 }
 
 void DigitalOutputToggle(digital_output_t output)
 {
-    Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, output->port, output->pin);
+    Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, output->gpio, output->bit);
+    return;
 }
 
 /* === End of documentation ==================================================================== */
