@@ -93,11 +93,18 @@ digital_output_t DigitalOutputAllocate(void)
 
 digital_input_t DigitalInputCreate(uint8_t gpio, uint8_t bit)
 {
-    return NULL;
+    static struct digital_input_s input;
+
+    input.gpio = gpio;
+    input.bit = bit;
+
+    Chip_GPIO_SetPinDIR(LPC_GPIO_PORT, input.gpio, input.bit, false);
+
+    return &input;
 }
 bool DigitalInputGetState(digital_input_t input)
 {
-    return 0;
+    return Chip_GPIO_ReadPortBit(LPC_GPIO_PORT, input->gpio, input->bit);
 }
 bool DigitalInputHasChanged(digital_input_t input)
 {
