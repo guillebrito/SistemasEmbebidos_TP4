@@ -72,7 +72,7 @@ digital_output_t DigitalOutputAllocate(void);
 
 /* === Private function implementation ========================================================= */
 
-digital_output_t DigitalInputAllocate(void)
+digital_input_t DigitalInputAllocate(void)
 {
     digital_input_t input = NULL;
 
@@ -135,7 +135,7 @@ bool DigitalInputGetState(digital_input_t input)
 
 bool DigitalInputHasChanged(digital_input_t input)
 {
-    bool state = DigitalInputGetState(input);
+    bool state = !DigitalInputGetState(input); // ==0 porque las
     bool result = state != input->last_state;
     input->last_state = state;
 
@@ -144,7 +144,7 @@ bool DigitalInputHasChanged(digital_input_t input)
 
 bool DigitalInputHasActivated(digital_input_t input)
 {
-    bool state = DigitalInputGetState(input);
+    bool state = !DigitalInputGetState(input);
     bool result = state && !input->last_state;
     input->last_state = state;
 
@@ -153,7 +153,7 @@ bool DigitalInputHasActivated(digital_input_t input)
 
 bool DigitalInputHasDeactivated(digital_input_t input)
 {
-    bool state = DigitalInputGetState(input);
+    bool state = !DigitalInputGetState(input);
     bool result = !state && input->last_state;
     input->last_state = state;
 

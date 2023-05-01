@@ -122,6 +122,8 @@
 
 int main(void)
 {
+    int divisor = 0;
+
     digital_output_t led_r;
     digital_output_t led_g;
     digital_output_t led_b;
@@ -134,14 +136,13 @@ int main(void)
     digital_input_t tec_3;
     digital_input_t tec_4;
 
-    int divisor = 0;
-    bool current_state, last_state = false;
-
     Chip_SCU_PinMuxSet(LED_R_PORT, LED_R_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_R_FUNC);
     led_r = DigitalOutputCreate(LED_R_GPIO, LED_R_BIT);
+    DigitalOutputDeactivate(led_r);
 
     Chip_SCU_PinMuxSet(LED_G_PORT, LED_G_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_G_FUNC);
     led_g = DigitalOutputCreate(LED_G_GPIO, LED_G_BIT);
+    DigitalOutputDeactivate(led_g);
 
     Chip_SCU_PinMuxSet(LED_B_PORT, LED_B_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_B_FUNC);
     led_b = DigitalOutputCreate(LED_B_GPIO, LED_B_BIT);
@@ -171,7 +172,7 @@ int main(void)
 
     while (true)
     {
-        if (DigitalInputGetState(tec_1) == 0)
+        if (!DigitalInputGetState(tec_1))
         {
             DigitalOutputActivate(led_b);
         }
