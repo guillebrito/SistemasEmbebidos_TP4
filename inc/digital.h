@@ -62,9 +62,10 @@ typedef struct digital_output_s * digital_output_t;
  * 
  * @param gpio  Puerto GPIO de la entrada.
  * @param bit   Terminal del puerto GPIO correspondiente a la entrada.
+ * @param inverted indica si usa lógica inversa.
  * @return digital_input_t Puntero al descriptor de la entrada creada.
  */
-digital_input_t DigitalInputCreate(uint8_t gpio, uint8_t bit);
+digital_input_t DigitalInputCreate(uint8_t gpio, uint8_t bit,bool inverted);
 
 /**
  * @brief Consulta el estado de la entrada digital.
@@ -111,9 +112,10 @@ bool DigitalInputHasDeactivated(digital_input_t input);
  * 
  * @param gpio  Puerto GPIO de la salida.
  * @param bit   Terminal del puerto GPIO correspondiente a la salida.
+ * @param inverted indica si usa lógica inversa.
  * @return digital_output_t Puntero al descriptor de la salida creada.
  */
-digital_output_t DigitalOutputCreate(uint8_t gpio, uint8_t bit);
+digital_output_t DigitalOutputCreate(uint8_t gpio, uint8_t bit,bool inverted);
 
 /**
  * @brief Activa una salida.
