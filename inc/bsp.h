@@ -22,12 +22,12 @@ SPDX-License-Identifier: MIT
 #ifndef BSP_H
 #define BSP_H
 
-/** \brief Board harware support
+/** \brief Board hardware support
  *
- ** Este módulo brinda las configuraciones de entradas y salidas de la placa EDU-CIAA_NXP para el
+ ** Este módulo brinda las configuraciones de entradas y salidas de la placa EDU-CIAA-NXP para el
  *práctico número 4
  **
- ** \addtogroup hal HAL
+ ** \addtogroup bsp BSP
  ** \brief Hardware abstraction layer
  ** @{ */
 
@@ -46,25 +46,37 @@ extern "C"
 
     /* === Public data type declarations =========================================================== */
 
+    /**
+     * @brief Descriptor de la placa EDU-CIAA-NXP
+     *
+     * Define un tipo de dato struct que almacena los punteros a los descriptores de cada entrada y
+     * salida digital.
+     *
+     */
     typedef struct board_s
     {
-        digital_input_t tec_1;
-        digital_input_t tec_2;
-        digital_input_t tec_3;
-        digital_input_t tec_4;
+        digital_input_t tec_1; //!< Puntero al descriptor de la entrada tec_1.
+        digital_input_t tec_2; //!< Puntero al descriptor de la entrada tec_2.
+        digital_input_t tec_3; //!< Puntero al descriptor de la entrada tec_3.
+        digital_input_t tec_4; //!< Puntero al descriptor de la entrada tec_4.
 
-        digital_output_t led_r;
-        digital_output_t led_g;
-        digital_output_t led_b;
-        digital_output_t led_1;
-        digital_output_t led_2;
-        digital_output_t led_3;
+        digital_output_t led_r; //!< Puntero al descriptor de la entrada led_r.
+        digital_output_t led_g; //!< Puntero al descriptor de la entrada led_g.
+        digital_output_t led_b; //!< Puntero al descriptor de la entrada led_b.
+        digital_output_t led_1; //!< Puntero al descriptor de la entrada led_1.
+        digital_output_t led_2; //!< Puntero al descriptor de la entrada led_2.
+        digital_output_t led_3; //!< Puntero al descriptor de la entrada led_3.
     } const * const board_t;
 
     /* === Public variable declarations ============================================================ */
 
     /* === Public function declarations ============================================================ */
 
+    /**
+     * @brief Crea descriptor de la placa.
+     *
+     * @return board_t Retorna un puntero constante al descriptor creado.
+     */
     board_t BoardCreate(void);
 
     /* === End of documentation ==================================================================== */

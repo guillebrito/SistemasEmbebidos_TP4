@@ -2,7 +2,7 @@
  * Facultad de Ciencias Exactas y Tecnología
  * Universidad Nacional de Tucuman
  * http://www.microprocesadores.unt.edu.ar/
- * Copyright 2022, Esteban Volentini <evolentini@herrera.unt.edu.ar>
+ * Copyright 2023, Guillermo Nicolás Brito <guillermonbrito@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,10 +32,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** \brief Simple sample of use LPC HAL gpio functions
- **
- ** \addtogroup samples Sample projects
- ** \brief Sample projects to use as a starting point
+/** \brief Ejemplo del uso de HAL y board support.
+ *
+ * En este trabajo pŕactico se crea e implementa una HAL y Board Support diseñada para la placa
+ *EDU-CIAA_NXP
+ *
+ ** \addtogroup main MAIN
+ ** \brief Ejemplo del uso de entradas y salidas digitales de la placa EDU-CIAA-NXP
  ** @{ */
 
 /* === Headers files inclusions =============================================================== */

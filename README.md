@@ -2,7 +2,7 @@
 
 -----
 
-Plantilla de proyectos para trabajos prácticos de Sistemas Embebidos.
+Gestión de entradas y salidas digitales de la placa EDU-CIAA-NXP
 
 **Table of Contents**
 
@@ -11,11 +11,25 @@ Plantilla de proyectos para trabajos prácticos de Sistemas Embebidos.
 
 ## Forma de uso
 
-Para utilizar este repositorio deben:
+Para utilizar este proyecto se debe:
 
 1. Crear un fork del repositorio en la página de Github. Esto creará un repositorio independiente propiedad del alumno pero que comparte los primeros commits con este repositorio.
 
-2. Clonar el repositorio usando la opción de incializar los submodulos. Si se hace por comandos se debe incluir el parámetro `–recurse-submodules` en el comando de clonación
+2. Clonar el repositorio e iniciarlizar el submodulo (muju):
+```
+git submodule init
+
+git submodule update
+```
+3. Compilar todo el programa con el comando `make`.
+
+4. Conectar mediante USB la placa a la PC, se debe utilizar el puerto "DEBUG" de la placa.
+
+5. Cargar los archivos en la placa con el comando `make download`.
+
+- Con el comando `make clean` se elimina la carpeta build.
+- Con el comando `make docs` se genera la documentación.
+
 
 ## License
 
