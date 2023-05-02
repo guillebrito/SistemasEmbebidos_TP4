@@ -23,8 +23,9 @@ SPDX-License-Identifier: MIT
 #define BSP_H
 
 /** \brief Board harware support
- * 
- ** Este módulo brinda las configuraciones de entradas y salidas de la placa EDU-CIAA_NXP para el práctico número 4
+ *
+ ** Este módulo brinda las configuraciones de entradas y salidas de la placa EDU-CIAA_NXP para el
+ *práctico número 4
  **
  ** \addtogroup hal HAL
  ** \brief Hardware abstraction layer
@@ -37,18 +38,36 @@ SPDX-License-Identifier: MIT
 /* === Cabecera C++ ============================================================================ */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-/* === Public macros definitions =============================================================== */
+    /* === Public macros definitions =============================================================== */
 
-/* === Public data type declarations =========================================================== */
+    /* === Public data type declarations =========================================================== */
 
-/* === Public variable declarations ============================================================ */
+    typedef struct board_s
+    {
+        digital_input_t tec_1;
+        digital_input_t tec_2;
+        digital_input_t tec_3;
+        digital_input_t tec_4;
 
-/* === Public function declarations ============================================================ */
+        digital_output_t led_r;
+        digital_output_t led_g;
+        digital_output_t led_b;
+        digital_output_t led_1;
+        digital_output_t led_2;
+        digital_output_t led_3;
+    } const * const board_t;
 
-/* === End of documentation ==================================================================== */
+    /* === Public variable declarations ============================================================ */
+
+    /* === Public function declarations ============================================================ */
+
+    board_t BoardCreate(void);
+
+    /* === End of documentation ==================================================================== */
 
 #ifdef __cplusplus
 }
