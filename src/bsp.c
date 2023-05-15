@@ -115,11 +115,11 @@ board_t BoardCreate(void)
 {
     Chip_SCU_PinMuxSet(LED_R_PORT, LED_R_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_R_FUNC);
     board.led_r = DigitalOutputCreate(LED_R_GPIO, LED_R_BIT, false);
-    // DigitalOutputDeactivate(board.led_r);
+    DigitalOutputDeactivate(board.led_r);
 
     Chip_SCU_PinMuxSet(LED_G_PORT, LED_G_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_G_FUNC);
     board.led_g = DigitalOutputCreate(LED_G_GPIO, LED_G_BIT, false);
-    // DigitalOutputDeactivate(board.led_g);
+    DigitalOutputDeactivate(board.led_g);
 
     Chip_SCU_PinMuxSet(LED_B_PORT, LED_B_PIN, SCU_MODE_INBUFF_EN | SCU_MODE_INACT | LED_B_FUNC);
     board.led_b = DigitalOutputCreate(LED_B_GPIO, LED_B_BIT, false);

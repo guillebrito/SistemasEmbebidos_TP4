@@ -88,11 +88,11 @@ int main(void)
             DigitalOutputToggle(board->led_1);
         }
 
-        if (DigitalInputHasActivated(board->tec_3))
+        if (DigitalInputGetState(board->tec_3))
         {
             DigitalOutputActivate(board->led_2);
         }
-        if (DigitalInputHasActivated(board->tec_4))
+        if (DigitalInputGetState(board->tec_4))
         {
             DigitalOutputDeactivate(board->led_2);
         }

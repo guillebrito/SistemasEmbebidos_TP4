@@ -60,12 +60,12 @@ extern "C"
         digital_input_t tec_3; //!< Puntero al descriptor de la entrada tec_3.
         digital_input_t tec_4; //!< Puntero al descriptor de la entrada tec_4.
 
-        digital_output_t led_r; //!< Puntero al descriptor de la entrada led_r.
-        digital_output_t led_g; //!< Puntero al descriptor de la entrada led_g.
-        digital_output_t led_b; //!< Puntero al descriptor de la entrada led_b.
-        digital_output_t led_1; //!< Puntero al descriptor de la entrada led_1.
-        digital_output_t led_2; //!< Puntero al descriptor de la entrada led_2.
-        digital_output_t led_3; //!< Puntero al descriptor de la entrada led_3.
+        digital_output_t led_r; //!< Puntero al descriptor de la salida led_r.
+        digital_output_t led_g; //!< Puntero al descriptor de la salida led_g.
+        digital_output_t led_b; //!< Puntero al descriptor de la salida led_b.
+        digital_output_t led_1; //!< Puntero al descriptor de la salida led_1.
+        digital_output_t led_2; //!< Puntero al descriptor de la salida led_2.
+        digital_output_t led_3; //!< Puntero al descriptor de la salida led_3.
     } const * const board_t;
 
     /* === Public variable declarations ============================================================ */
@@ -74,6 +74,8 @@ extern "C"
 
     /**
      * @brief Crea descriptor de la placa.
+     *
+     * Crea e inicializa las entradas y salidas de la placa
      *
      * @return board_t Retorna un puntero constante al descriptor creado.
      */
